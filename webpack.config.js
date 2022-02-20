@@ -18,7 +18,7 @@ module.exports = {
         filename: 'js/bundle.js'//输出文件的名称
     },
     //插件的数组，将来webpack在运行时，会加载并调用这些插件
-    plugins: [htmlPlugin,new CleanWebpackPlugin()],
+    plugins: [htmlPlugin, new CleanWebpackPlugin()],
     devServer: {
         open: true,
         port: 80,
@@ -30,8 +30,21 @@ module.exports = {
             { test: /\.css$/, use: ['style-loader', 'css-loader'] },
             { test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] },
             { test: /.jpg|png|gif$/, use: 'url-loader?limit=22&outputPath=images' },
-            { test: /.js$/, use:'babel-loader', exclude: /node_modules/ }
+            { test: /.js$/, use: 'babel-loader', exclude: /node_modules/ }
 
         ]
+    },
+    //nosources-source-map。
+    // devtool: 'eval-source-map',
+    resolve: {
+        alias: {
+            //告诉 webpack，程序员写的代码中，@符号表示src这一层目录
+            '@': path.join(__dirname, './src/')
+        }
+    },
+    performance: {
+        hints: 'error',
+        maxAssetSize: 300000, // 整数类型（以字节为单位）
+        maxEntrypointSize: 500000 // 整数类型（以字节为单位）
     }
 }
